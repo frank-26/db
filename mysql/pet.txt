@@ -1,0 +1,86 @@
+
+select * from pet 
++----------+--------+---------+------+------------+------------+
+| name     | owner  | species | sex  | birth      | death      |
++----------+--------+---------+------+------------+------------+
+| Puffball | Diane  | hamster | m    | 1999-03-30 | NULL       |
+| Puffball | Diane  | hamster | m    | 1999-03-30 | NULL       |
+| Puffball | Diane  | hamster | m    | 1999-03-30 | NULL       |
+| Fluffy   | Harold | cat     | f    | 1993-02-04 | NULL       |
+| Fang     | Harold | cat     | f    | 1993-02-04 | NULL       |
+| Bowser   | Harold | cat     | f    | 1993-02-04 | NULL       |
+| Chirpy   | Harold | cat     | f    | 1993-02-04 | NULL       |
+| Slim     | Harold | cat     | f    | 1993-02-04 | NULL       |
+| Whistler | Xarold | cat     | f    | 1993-02-04 | NULL       |
+| Whistler | Xarold | cat     | m    | 1990-02-04 | 2010-10-10 |
++----------+--------+---------+------+------------+------------+
+
+
+mysql> select name,birth,curdate(),timestampdiff(year,birth,curdate()) as age from pet;
++----------+------------+------------+------+
+| name     | birth      | curdate()  | age  |
++----------+------------+------------+------+
+| Puffball | 1999-03-30 | 2019-08-25 |   20 |
+| Puffball | 1999-03-30 | 2019-08-25 |   20 |
+| Puffball | 1999-03-30 | 2019-08-25 |   20 |
+| Fluffy   | 1993-02-04 | 2019-08-25 |   26 |
+| Fang     | 1993-02-04 | 2019-08-25 |   26 |
+| Bowser   | 1993-02-04 | 2019-08-25 |   26 |
+| Chirpy   | 1993-02-04 | 2019-08-25 |   26 |
+| Slim     | 1993-02-04 | 2019-08-25 |   26 |
+| Whistler | 1993-02-04 | 2019-08-25 |   26 |
+| Whistler | 1990-02-04 | 2019-08-25 |   29 |
++----------+------------+------------+------+
+
+mysql> alter table pet add (age int(11) default 18 );
+mysql> select * from pet;
++----------+--------+---------+------+------------+------------+------+
+| name     | owner  | species | sex  | birth      | death      | age  |
++----------+--------+---------+------+------------+------------+------+
+| Puffball | Diane  | hamster | m    | 1999-03-30 | NULL       |   18 |
+| Puffball | Diane  | hamster | m    | 1999-03-30 | NULL       |   18 |
+| Puffball | Diane  | hamster | m    | 1999-03-30 | NULL       |   18 |
+| Fluffy   | Harold | cat     | f    | 1993-02-04 | NULL       |   18 |
+| Fang     | Harold | cat     | f    | 1993-02-04 | NULL       |   18 |
+| Bowser   | Harold | cat     | f    | 1993-02-04 | NULL       |   18 |
+| Chirpy   | Harold | cat     | f    | 1993-02-04 | NULL       |   18 |
+| Slim     | Harold | cat     | f    | 1993-02-04 | NULL       |   18 |
+| Whistler | Xarold | cat     | f    | 1993-02-04 | NULL       |   18 |
+| Whistler | Xarold | cat     | m    | 1990-02-04 | 2010-10-10 |   18 |
++----------+--------+---------+------+------------+------------+------+
+
+mysql> alter table pet rename column age to pet_age;
++----------+--------+---------+------+------------+------------+---------+
+| name     | owner  | species | sex  | birth      | death      | pet_age |
++----------+--------+---------+------+------------+------------+---------+
+| Puffball | Diane  | hamster | m    | 1999-03-30 | NULL       |      18 |
+| Puffball | Diane  | hamster | m    | 1999-03-30 | NULL       |      18 |
+| Puffball | Diane  | hamster | m    | 1999-03-30 | NULL       |      18 |
+| Fluffy   | Harold | cat     | f    | 1993-02-04 | NULL       |      18 |
+| Fang     | Harold | cat     | f    | 1993-02-04 | NULL       |      18 |
+| Bowser   | Harold | cat     | f    | 1993-02-04 | NULL       |      18 |
+| Chirpy   | Harold | cat     | f    | 1993-02-04 | NULL       |      18 |
+| Slim     | Harold | cat     | f    | 1993-02-04 | NULL       |      18 |
+| Whistler | Xarold | cat     | f    | 1993-02-04 | NULL       |      18 |
+| Whistler | Xarold | cat     | m    | 1990-02-04 | 2010-10-10 |      18 |
++----------+--------+---------+------+------------+------------+---------+
+
+mysql> alter table pet drop column pet_age;
+
+mysql> select * from pet where name like 'f%';
++--------+--------+---------+------+------------+-------+
+| name   | owner  | species | sex  | birth      | death |
++--------+--------+---------+------+------------+-------+
+| Fluffy | Harold | cat     | f    | 1993-02-04 | NULL  |
+| Fang   | Harold | cat     | f    | 1993-02-04 | NULL  |
++--------+--------+---------+------+------------+-------+
+mysql> select * from pet where name like '%er';
+mysql> select * from pet where name like '____';//4 
+mysql> select * from pet where  regexp_like(name,'^b');
+
+mysql> select count(*) from pet;
++----------+
+| count(*) |
++----------+
+|       10 |
++----------+
