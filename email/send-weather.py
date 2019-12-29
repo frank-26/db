@@ -19,10 +19,10 @@ sender = 'elliot29@163.com'
 receivers = ['1393273899@qq.com','franklyan24@gmail.com']  
 
 #邮件内容设置
-const = 'todo...'
+content = 'todo...'
 #设置email信息
 
-message = MIMEText('content','plain','utf-8')
+message = MIMEText(content,'plain','utf-8')
 #邮件主题       
 message['Subject'] = 'hello' 
 #发送方信息
@@ -31,16 +31,16 @@ message['From'] = sender
 message['To'] = receivers[0]
 
 #登录并发送邮件
-# try:
-#     smtpObj = smtplib.SMTP_SSL(mail_host,465)
+try:
+    smtpObj = smtplib.SMTP_SSL(mail_host,465)
 
-#     #登录到服务器
-#     smtpObj.login(mail_user,mail_pass) 
-#     #发送
-#     smtpObj.sendmail(
-#         sender,receivers,message.as_string()) 
-#     #退出
-#     smtpObj.quit() 
-#     print('success')
-# except smtplib.SMTPException as e:
-#     print('error',e) #打印错误
+    #登录到服务器
+    smtpObj.login(mail_user,mail_pass) 
+    #发送
+    smtpObj.sendmail(
+        sender,receivers,message.as_string()) 
+    #退出
+    smtpObj.quit() 
+    print('success')
+except smtplib.SMTPException as e:
+    print('error',e) #打印错误
